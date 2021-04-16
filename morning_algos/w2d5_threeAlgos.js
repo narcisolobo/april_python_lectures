@@ -253,19 +253,82 @@ class SinglyLinkedList {
 
     // SList: Remove Negatives
     // Create a method that removes any nodes containing negative values. You can return the modified list at completion.
+    removeNegatives() {
+        let prev = null;
+        let runner = this.head;
+
+        while (runner) {
+            if(runner.val < 0) {
+                if(prev === null) {
+                    this.head = runner.next;
+                } else {
+                    prev.next = runner.next;
+                }
+            }
+            prev = runner;
+            runner = runner.next;
+        }
+        return this;
+    }
 
     // SList: Partition
     // Create method partition(value) that, given a value, locates the first node with that value, and moves all nodes with values less than that value to be earlier, and all nodes with values greater than that value to be later. Otherwise, original order need not be perfectly preserved. Return the new singly linked list.
+    partition(val) {
+        if (this.isEmpty()) {
+            console.log("This SLL is empty.")
+            return this;
+        } else {
+            if(!this.contains(val)) {
+                return this;
+            } else {
+                let lowerList = new SinglyLinkedList();
+                let higherList = new SinglyLinkedList();
+                let valCount = 0;
+                let runner = this.head;
+
+                while(runner) {
+                    if (runner.val < val) {
+                        lowerList.addFront(runner.val);
+                    } else if (runner.val > val) {
+                        higherList.addFront(runner.val)
+                    } else {
+                        valCount++;
+                    }
+                    runner = runner.next
+                }
+                for (let i = 0; i < valCount; i++) {
+                    higherList.addFront(val);
+                }
+                runner = lowerList.head;
+                while(runner.next){
+                    runner = runner.next;
+                }
+                runner.next = higherList.head;
+                this.head = lowerList.head;
+            }
+        }
+        return this;
+    }
 }
 
 const mySLL = new SinglyLinkedList();
-mySLL.populateRandom(300, 20).printVals().maxToBack().printVals().minToFront().printVals()
+mySLL.populateRandom(300, 10).addFront(150).populateRandom(300, 10).printVals()
+mySLL.partition(150).printVals()
 
 // SList: Second to Last Value
 // Create a standalone function that, given a pointer to the first node in a singly linked list, will return the second-to-last value in that list. What will you return if the list is not long enough?
-
 function secondToLastVal(singlyLinkedList) {
-    // code to return the second-to-last value here
+    let runner = singlyLinkedList.head;
+    if(runner === null || runner.next == null) {
+        console.log("This list does not contain enough nodes.")
+        return singlyLinkedList;
+    } else {
+        let prev = null;
+        while(runner.next) {
+            prev = runner;
+            runner = runner.next;
+        }
+        console.log(`Second-to-last val: ${prev.val}`)
+    }
+    return singlyLinkedList;
 }
-
-secondToLastVal(mySLL)
