@@ -34,7 +34,7 @@ class BaseballPlayer(models.Model):
     last_name = models.CharField(max_length=45)
     position = models.CharField(max_length=45)
     # the relationship for a one to many relationship is ALWAYS defined on the many side
-    baseball_team = models.ForeignKey(BaseballTeam, related_name="baseball_players")
+    baseball_team = models.ForeignKey(BaseballTeam, related_name="baseball_players", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -87,6 +87,5 @@ class Student(models.Model):
 
 # Many to Many
 # The many to many field goes on either side
-# name field plural and default to the name of the related class
+# Name the field plural and default to the name of the related class
 # Related name is the plural of the class you're in
-
