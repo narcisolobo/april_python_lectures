@@ -152,19 +152,37 @@ class SLQueue {
     // Given a Queue, return true if its values are a palindrome (if they are same in reverse order), else return false. Restore Queue to original state before exiting. For storage, use one additional Stack.
     isPalindrome() {
         // create a storage stack
-        // loop through queue
-            // dequeue node into temp
-            // push temp into stack
-            // enqueue temp back into queue
+        let storageStack = new SLStack();
 
         // loop through queue
-            // dequeue into temp
-            // pop into temp
+        for (let i = 0; i < this.size; i++) {
+            // dequeue node into temp
+            let temp = this.dequeue();
+            // push temp into storage stack
+            storageStack.push(temp);
+            // enqueue temp back into queue
+            this.enqueue(temp);
+        }
+        // loop through queue
+        for (let i = 0; i < this.size; i++) {
+            // dequeue from queue into temp
+            let q = this.dequeue();
+            // pop from stack into temp
+            let s = storageStack.pop();
             // compare
+            if(q !== s) {
                 // if not equal, return false
+                console.log('This queue is not a palindrome.')
+                return false;
+            }
             // enqueue back into queue
-            
+            this.enqueue(q);
+        }
         // after loop, return true
-        
+        console.log('This queue is a palindrome.')
+        return true;
     }
 }
+
+let mySLQueue = new SLQueue()
+mySLQueue.popPalindrome(26).printVals().isPalindrome()
